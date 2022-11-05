@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
   searchIcon: {
     alignSelf: 'center',
     marginRight: 20,
+    width: 15,
+    height: 15,
   },
   textInputView: {
     borderWidth: 1,
-    borderColor: '#666666',
+    borderColor: '#fff',
     borderRadius: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -37,7 +39,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'relative',
   },
-  textInput: {flex: 1, padding: 5, paddingLeft: 15, margin: 10, fontSize: 20},
+  textInput: {
+    flex: 1,
+    padding: 5,
+    paddingLeft: 20,
+    margin: 5,
+    fontSize: 20,
+    color: '#fff',
+  },
 });
 
 export default Search;

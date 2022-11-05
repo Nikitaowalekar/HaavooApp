@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
 import React from 'react';
 
 const SelectCity = () => {
@@ -16,21 +23,21 @@ const SelectCity = () => {
       <View style={styles.mainCard}>
         <View style={styles.cityCard}>
           <Image
-            style={styles.card}
+            style={styles.imageCard}
             source={require('../../styles/icons/ernakulam.png')}
           />
           <Text>Ernakulam</Text>
         </View>
         <View style={styles.cityCard}>
           <Image
-            style={styles.card}
+            style={styles.imageCard}
             source={require('../../styles/icons/kozhikode.png')}
           />
           <Text>Kozhikode</Text>
         </View>
         <View style={styles.cityCard}>
           <Image
-            style={styles.card}
+            style={styles.imageCard}
             source={require('../../styles/icons/malappuram.png')}
           />
           <Text>Malappuram</Text>
@@ -39,14 +46,14 @@ const SelectCity = () => {
       <View style={styles.secondMainCard}>
         <View style={styles.cityCard}>
           <Image
-            style={styles.card}
+            style={styles.imageCard}
             source={require('../../styles/icons/ernakulam.png')}
           />
           <Text>Thiruvananthpuram</Text>
         </View>
         <View style={styles.cityCard}>
           <Image
-            style={styles.card}
+            style={styles.imageCard}
             source={require('../../styles/icons/kozhikode.png')}
           />
           <Text>Thrisur</Text>
@@ -89,6 +96,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     margin: 5,
+  },
+  imageCard: {
+    width: 50,
+    height: 50,
+    resizeMode: 'center',
   },
   otherCities: {
     paddingLeft: 10,

@@ -21,13 +21,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   backArrow: {
-    width: 30,
+    width: 20,
     height: 30,
-    padding: 3,
-    marginRight: 10,
   },
   searchText: {
     fontSize: 20,
     fontWeight: '600',
+    marginLeft: 40,
+    marginRight: 40,
   },
 });

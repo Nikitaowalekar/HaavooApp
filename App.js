@@ -6,21 +6,25 @@
  * @flow strict-local
  */
 
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Home from './pages/landing_page';
+import HaavooHome from './pages/landing_page';
+import MainPage from './pages/main_page';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <View>
-      <Home />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Haavoo App" component={HaavooHome} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

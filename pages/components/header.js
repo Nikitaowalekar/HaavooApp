@@ -6,13 +6,15 @@ const HaavooHeader = () => {
     <View>
       <View style={styles.mainHeader}>
         <Image
-          style={[styles.hamburgerIcon, {transform: [{rotate: '180deg'}]}]}
-          source={require('../../styles/icons/hamburger.png')}
+          style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
+          source={require('../../styles/icons/white-arrow-icon.png')}
         />
 
-        <Text style={styles.textHome}> Search </Text>
+        <View style={styles.mainSearch}>
+          <Text style={styles.textHome}> Search </Text>
+        </View>
       </View>
-      <View>
+      <View style={styles.cityMain}>
         <Text style={styles.city}> Kozhikode</Text>
       </View>
     </View>
@@ -34,9 +36,25 @@ const styles = StyleSheet.create({
   },
   textHome: {
     fontSize: 24,
+    alignItems: 'center',
+    color: '#fff',
   },
   city: {
     fontSize: 20,
     fontWeight: '700',
+    color: '#fff',
+  },
+  backArrow: {
+    width: 20,
+    height: 30,
+  },
+  mainSearch: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  cityMain: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

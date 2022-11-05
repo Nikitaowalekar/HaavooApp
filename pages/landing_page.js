@@ -1,17 +1,29 @@
 import React from 'react';
-import Search from './components/search';
-import {View} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import SelectCity from './components/selectCity';
 import HaavooCityPage from './components/haavoocitypage';
+import Search from './components/search';
 
-const Home = () => {
+const HaavooHome = () => {
   return (
-    <View>
-      <HaavooCityPage />
-      <Search />
-      <SelectCity />
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <HaavooCityPage />
+        <Search />
+        <SelectCity />
+      </ScrollView>
     </View>
   );
 };
 
-export default Home;
+export default HaavooHome;
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    flex: 1,
+  },
+  scrollView: {
+    marginHorizontal: 10,
+  },
+});

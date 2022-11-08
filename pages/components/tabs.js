@@ -1,54 +1,34 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
+import Business from './business';
+import Deals from './deals';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useState} from 'react/cjs/react.development';
 
-const Tabs = () => {
+const Tab = createNativeStackNavigator();
+
+const Tabs = ({navigation}) => {
+  const [tabSwitch, setTabSwitch] = useState(null);
   return (
     <View>
       <View style={styles.tabsMain}>
-        <Text style={styles.tabSection}>Business</Text>
-        <Text style={styles.tabSection}>Deals</Text>
+        <Text
+          style={tabSwitch === true ? styles.yellowBg : styles.tabSection}
+          onPress={() => setTabSwitch(true)}>
+          Business
+        </Text>
+        <Text
+          style={tabSwitch === false ? styles.yellowBg : styles.tabSection}
+          onPress={() => setTabSwitch(false)}>
+          Deals
+        </Text>
       </View>
-      {/* Deals card details */}
-      <View>
-        <View style={styles.cardParent}>
-          <View style={styles.flexMain}>
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../../styles/images/4.jpg')}
-              />
-            </View>
-            <View>
-              <Text style={styles.whiteText}> Fitness Test</Text>
-              <Text style={styles.greenText}> Offer Ends on 13 Oct</Text>
-              <Text style={styles.normalText}> POLO </Text>
-              <Text style={styles.normalText}> Clothes </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View>
-        <View style={styles.cardParent}>
-          <View style={styles.flexMain}>
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../../styles/images/4.jpg')}
-              />
-            </View>
-            <View>
-              <Text style={styles.whiteText}> Fitness Test</Text>
-              <Text style={styles.greenText}> Offer Ends on 13 Oct</Text>
-              <Text style={styles.normalText}> POLO </Text>
-              <Text style={styles.normalText}> Clothes </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      {tabSwitch && <Business />}
+      {tabSwitch === false && <Deals />}
       {/* no details found card */}
-      <View style={styles.noDeals}>
+      {/* <View style={styles.noDeals}>
         <Text> Sorry , No deals Found </Text>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -61,52 +41,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     margin: 10,
+    marginTop: 0,
   },
   tabSection: {
     borderColor: '#fff',
     borderWidth: 1,
-    padding: 10,
+    padding: 8,
     margin: 2,
-    color: '#fff',
-    fontWeight: '700',
+    color: '#000',
+    fontWeight: '600',
     fontSize: 20,
     borderRadius: 50,
     flex: 1,
     textAlign: 'center',
-  },
-  cardParent: {
-    borderWidth: 1,
-    borderColor: '#666666',
-    borderRadius: 10,
-    margin: 15,
-    marginBottom: 5,
-  },
-  flexMain: {
-    flexDirection: 'row',
-    margin: 20,
-  },
-  image: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  whiteText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-    height: 40,
-  },
-  greenText: {
-    color: '#7CFC00',
-    fontSize: 14,
-  },
-  normalText: {
-    fontSize: 12,
+    backgroundColor: '#fff',
   },
   noDeals: {
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
+  },
+  yellowBg: {
+    backgroundColor: '#FAA41A',
+    borderColor: '#FAA41A',
+    borderWidth: 1,
+    padding: 8,
+    margin: 2,
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 20,
+    borderRadius: 50,
+    flex: 1,
+    textAlign: 'center',
   },
 });

@@ -8,10 +8,14 @@ import {
 } from 'react-native';
 import React from 'react';
 
-const SelectCity = () => {
+const SelectCity = ({navigation}) => {
   var citiesArray = [
     'Alappuzha',
     'Idukki',
+    'Kannur',
+    'Kasargod',
+    'kollam',
+    'kattayam',
     'Kannur',
     'Kasargod',
     'kollam',
@@ -26,21 +30,25 @@ const SelectCity = () => {
             style={styles.imageCard}
             source={require('../../styles/icons/ernakulam.png')}
           />
-          <Text>Ernakulam</Text>
+          <Text style={styles.blackText}>Ernakulam</Text>
         </View>
         <View style={styles.cityCard}>
           <Image
             style={styles.imageCard}
             source={require('../../styles/icons/kozhikode.png')}
           />
-          <Text>Kozhikode</Text>
+          <Text
+            style={styles.blackText}
+            onPress={() => navigation.navigate('Search')}>
+            Kozhikode
+          </Text>
         </View>
         <View style={styles.cityCard}>
           <Image
             style={styles.imageCard}
             source={require('../../styles/icons/malappuram.png')}
           />
-          <Text>Malappuram</Text>
+          <Text style={styles.blackText}>Malappuram</Text>
         </View>
       </View>
       <View style={styles.secondMainCard}>
@@ -49,14 +57,14 @@ const SelectCity = () => {
             style={styles.imageCard}
             source={require('../../styles/icons/ernakulam.png')}
           />
-          <Text>Thiruvananthpuram</Text>
+          <Text style={styles.blackText}>Thiruvananthpuram</Text>
         </View>
         <View style={styles.cityCard}>
           <Image
             style={styles.imageCard}
             source={require('../../styles/icons/kozhikode.png')}
           />
-          <Text>Thrisur</Text>
+          <Text style={styles.blackText}>Thrisur</Text>
         </View>
       </View>
       <View style={styles.otherCities}>
@@ -77,6 +85,7 @@ const styles = StyleSheet.create({
   mainText: {
     fontSize: 22,
     paddingLeft: 10,
+    color: '#fff',
   },
   mainCard: {
     flexDirection: 'row',
@@ -98,8 +107,8 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   imageCard: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     resizeMode: 'center',
   },
   otherCities: {
@@ -107,9 +116,14 @@ const styles = StyleSheet.create({
   },
   otherCitiesText: {
     fontSize: 20,
+    color: '#fff',
   },
   TextStyle: {
     fontSize: 16,
     padding: 5,
+    color: '#fff',
+  },
+  blackText: {
+    color: '#fff',
   },
 });

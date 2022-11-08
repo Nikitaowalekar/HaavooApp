@@ -9,7 +9,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import HaavooHome from './pages/landing_page';
@@ -20,12 +20,22 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer style={styles.background}>
       <Stack.Navigator>
-        <Stack.Screen name="Haavoo App" component={HaavooHome} />
+        <Stack.Screen name="Search" component={MainPage} />
+        <Stack.Screen
+          name="Search Your City or Location"
+          component={HaavooHome}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#4F0D04',
+  },
+});

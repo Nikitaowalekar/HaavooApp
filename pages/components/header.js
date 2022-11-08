@@ -1,10 +1,10 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Button} from 'react-native';
 import React from 'react';
 
-const HaavooHeader = () => {
+const HaavooHeader = ({navigation}) => {
   return (
     <View>
-      <View style={styles.mainHeader}>
+      {/* <View style={styles.mainHeader}>
         <Image
           style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
           source={require('../../styles/icons/white-arrow-icon.png')}
@@ -13,9 +13,18 @@ const HaavooHeader = () => {
         <View style={styles.mainSearch}>
           <Text style={styles.textHome}> Search </Text>
         </View>
-      </View>
+      </View> */}
       <View style={styles.cityMain}>
-        <Text style={styles.city}> Kozhikode</Text>
+        <Text
+          style={styles.city}
+          onPress={() => navigation.navigate('Search Your City or Location')}>
+          {' '}
+          Kozhikode
+          {/* <Image
+            style={styles.downArrow}
+            source={require('../../styles/icons/downArrow.png')}
+          /> */}
+        </Text>
       </View>
     </View>
   );
@@ -56,5 +65,11 @@ const styles = StyleSheet.create({
   cityMain: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20,
+  },
+  downArrow: {
+    width: 30,
+    height: 20,
+    marginLeft: 15,
   },
 });

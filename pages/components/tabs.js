@@ -8,7 +8,7 @@ import {useState} from 'react/cjs/react.development';
 const Tab = createNativeStackNavigator();
 
 const Tabs = ({navigation}) => {
-  const [tabSwitch, setTabSwitch] = useState(null);
+  const [tabSwitch, setTabSwitch] = useState(true);
   return (
     <View>
       <View style={styles.tabsMain}>

@@ -10,8 +10,8 @@ const MainPage = ({navigation}) => {
     <View style={styles.mainbgColor}>
       <HaavooHeader navigation={navigation} />
       <Search />
-      <Tabs />
       <SortAndFilter />
+      <Tabs />
     </View>
   );
 };

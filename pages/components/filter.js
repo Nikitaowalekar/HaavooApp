@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, Pressable, Modal, Alert} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Modal,
+  Alert,
+  Image,
+} from 'react-native';
 import React from 'react';
 import {useState} from 'react/cjs/react.development';
 
@@ -28,6 +36,10 @@ const Filter = () => {
       <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}>
+        <Image
+          style={styles.sortIcon}
+          source={require('../../styles/icons/filter.png')}
+        />
         <Text style={styles.textStyle}>Filters</Text>
       </Pressable>
     </View>
@@ -45,7 +57,7 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 35,
     alignItems: 'center',
     shadowColor: '#000',
@@ -58,9 +70,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     elevation: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonOpen: {
     backgroundColor: '#FFF',
@@ -72,11 +87,16 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     textAlign: 'center',
-    paddingLeft: 20,
+    paddingLeft: 5,
     paddingRight: 20,
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    color: 'black',
+  },
+  sortIcon: {
+    width: 20,
+    height: 20,
   },
 });

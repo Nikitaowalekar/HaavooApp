@@ -20,10 +20,10 @@ const HaavooHeader = ({navigation}) => {
           onPress={() => navigation.navigate('Search Your City or Location')}>
           {' '}
           Kozhikode
-          {/* <Image
+          <Image
             style={styles.downArrow}
             source={require('../../styles/icons/downArrow.png')}
-          /> */}
+          />
         </Text>
       </View>
     </View>
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   downArrow: {
-    width: 30,
-    height: 20,
+    width: 20,
+    height: 30,
     marginLeft: 15,
   },
 });

@@ -17,7 +17,6 @@ export default SortAndFilter;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    margin: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
   },

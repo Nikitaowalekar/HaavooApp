@@ -8,10 +8,14 @@ import SortAndFilter from './components/sortandfilter';
 const MainPage = ({navigation}) => {
   return (
     <View style={styles.mainbgColor}>
-      <HaavooHeader navigation={navigation} />
-      <Search />
-      <SortAndFilter />
-      <Tabs />
+      <View style={{flex: 1}}>
+        <HaavooHeader navigation={navigation} />
+        <Search />
+        <Tabs />
+      </View>
+      <View style={{height: 50}}>
+        <SortAndFilter />
+      </View>
     </View>
   );
 };
@@ -22,5 +26,6 @@ const styles = StyleSheet.create({
   mainbgColor: {
     backgroundColor: '#4F0D04',
     height: '100%',
+    flex: 1,
   },
 });

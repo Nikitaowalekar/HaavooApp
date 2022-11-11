@@ -1,13 +1,16 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
-const HaavooCityPage = () => {
+const HaavooCityPage = ({navigation}) => {
   return (
     <View style={styles.mainHeader}>
-      <Image
-        style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
-        source={require('../../styles/icons/white-arrow-icon.png')}
-      />
+      <Pressable onPress={() => navigation.navigate('Search')}>
+        <Image
+          style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
+          source={require('../../styles/icons/white-arrow-icon.png')}
+        />
+      </Pressable>
       <Text style={styles.searchText}>Search Your City or Location</Text>
     </View>
   );

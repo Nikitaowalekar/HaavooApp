@@ -51,8 +51,8 @@ export default Filter;
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    marginTop: 22,
-    margin: 5,
+    // marginTop: 22,
+    margin: 0,
   },
   modalView: {
     margin: 20,
@@ -70,19 +70,19 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 10,
-    padding: 10,
+    // borderRadius: 10,
+    padding: 15,
     elevation: 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonOpen: {
-    backgroundColor: '#FFF',
+    backgroundColor: 'lightgray',
   },
-  // buttonClose: {
-  //   backgroundColor: '#2196F3',
-  // },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
   textStyle: {
     color: 'black',
     fontWeight: 'bold',

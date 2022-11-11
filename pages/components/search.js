@@ -11,6 +11,7 @@ const Search = () => {
         underlineColor="transparent"
         returnKeyType={'done'}
         selectionColor="black"
+        placeholderTextColor="#F8F0E3"
         // value={searchValue}
         // onChangeText={text => searchFunction(text)}
       />

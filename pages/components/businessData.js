@@ -2,20 +2,33 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 
 const BusinessData = props => {
-  console.log(props?.item?.img, 'images');
+  const regex = /(<([^>]+)>)/gi;
+  const temp = props?.item?.description.replace(regex, '');
+  var desc = temp.replace(/&nbsp;/g, '');
+  // console.log(props?.item.thumb_image);
+  var img = `https://staging.admin.haavoo.com/app-images/${props?.item?.thumb_image}`;
+
+  console.log('business details', props);
   return (
-    <View style={styles.cardParent} key={props?.index}>
+    <View style={styles.cardParent} key={props?.item?.id}>
       <View style={styles.flexMain}>
         <View>
-          <Image style={styles.image} source={props?.item?.img} />
+          <Image
+            style={styles.image}
+            source={{
+              uri: `${img}`,
+            }}
+          />
         </View>
         <View style={styles.mainText}>
-          <Text style={styles.whiteText}>{props?.item?.name}</Text>
-          <Text style={styles.normalText}>Area : {props?.item?.area}</Text>
+          <Text style={styles.whiteText}>{props?.item?.business_name}</Text>
           <Text style={styles.normalText}>
-            Category : {props?.item?.category}
+            Area : {props?.item?.areas[0]?.name}
           </Text>
-          <Text style={styles.normalText}>{props?.item?.text}</Text>
+          <Text style={styles.normalText}>
+            Category : {props?.item?.categories[0]?.name}
+          </Text>
+          <Text style={styles.normalText}>{desc}</Text>
         </View>
       </View>
     </View>
@@ -53,5 +66,6 @@ const styles = StyleSheet.create({
   },
   normalText: {
     fontSize: 12,
+    color: '#fff',
   },
 });

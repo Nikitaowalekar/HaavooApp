@@ -24,12 +24,21 @@ const Sort = () => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
             <Pressable
+              style={styles.closebtn}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Image
+                style={styles.closeIcon}
+                source={require('../../styles/icons/closeicon.png')}
+              />
+            </Pressable>
+            <Text style={styles.modalText}> Relevance </Text>
+            <Text style={styles.modalText}> Popularity </Text>
+            {/* <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+            </Pressable> */}
           </View>
         </View>
       </Modal>
@@ -51,16 +60,18 @@ export default Sort;
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    marginTop: 22,
-    margin: 5,
+    // marginTop: 22,
+    margin: 0,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
+    margin: 0,
+    backgroundColor: '#000',
+    borderRadius: 10,
     padding: 35,
-    alignItems: 'center',
+    paddingTop: 20,
+    // alignItems: 'center',
     shadowColor: '#000',
+    top: '73%',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -70,19 +81,20 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 10,
-    padding: 10,
+    // borderRadius: 10,
+    padding: 15,
     elevation: 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonOpen: {
-    backgroundColor: '#FFF',
+    backgroundColor: 'lightgray',
   },
-  // buttonClose: {
-  //   backgroundColor: '#2196F3',
-  // },
+  buttonClose: {
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+  },
   textStyle: {
     color: 'black',
     fontWeight: 'bold',
@@ -92,11 +104,19 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
-    color: 'black',
+    // textAlign: 'center',
+    color: 'white',
   },
   sortIcon: {
     width: 20,
     height: 20,
+  },
+  closeIcon: {
+    width: 20,
+    height: 20,
+    marginBottom: 10,
+  },
+  closebtn: {
+    left: '100%',
   },
 });

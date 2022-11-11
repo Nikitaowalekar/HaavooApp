@@ -1,45 +1,46 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, FlatList} from 'react-native';
 import React from 'react';
+import axios from 'react-native-axios';
+import {useEffect, useState} from 'react/cjs/react.development';
+import dealsData from './dealsData';
+import isEmpty from './isempty';
 
 const Deals = () => {
+  const [details, setDetails] = useState([]);
+  const fetchDeals = () => {
+    axios
+      .get(
+        'https://staging.admin.haavoo.com/api/deals?city=&area=&query=&page=1&type=&category=&sort=&pageSize=',
+      )
+      .then(function (response) {
+        setDetails(response?.data?.data);
+      })
+      .catch(function (error) {
+        // handle error
+        alert(error.message);
+      });
+  };
+
+  useEffect(() => {
+    fetchDeals();
+  }, []);
+
   return (
     <View>
       {/* Deals card details */}
       <View>
-        <View style={styles.cardParent}>
-          <View style={styles.flexMain}>
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../../styles/images/4.jpg')}
-              />
-            </View>
-            <View>
-              <Text style={styles.whiteText}> Fitness Test</Text>
-              <Text style={styles.greenText}> Offer Ends on 13 Oct</Text>
-              <Text style={styles.normalText}> POLO </Text>
-              <Text style={styles.normalText}> Clothes </Text>
-            </View>
+        {!isEmpty(details) ? (
+          <FlatList
+            style={{height: '85%'}}
+            data={details}
+            renderItem={dealsData}
+            keyExtractor={item => item.id}
+          />
+        ) : (
+          <View style={styles.noDeals}>
+            <Text style={styles.dealsText}> Sorry, no deals found. </Text>
           </View>
-        </View>
-      </View>
-      <View>
-        <View style={styles.cardParent}>
-          <View style={styles.flexMain}>
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../../styles/images/4.jpg')}
-              />
-            </View>
-            <View>
-              <Text style={styles.whiteText}> Fitness Test</Text>
-              <Text style={styles.greenText}> Offer Ends on 13 Oct</Text>
-              <Text style={styles.normalText}> POLO </Text>
-              <Text style={styles.normalText}> Clothes </Text>
-            </View>
-          </View>
-        </View>
+        )}
       </View>
     </View>
   );
@@ -48,34 +49,13 @@ const Deals = () => {
 export default Deals;
 
 const styles = StyleSheet.create({
-  cardParent: {
-    borderWidth: 1,
-    borderColor: '#666666',
-    borderRadius: 10,
-    margin: 15,
-    marginBottom: 5,
+  noDeals: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
   },
-  flexMain: {
-    flexDirection: 'row',
-    margin: 20,
-  },
-  image: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  whiteText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-    height: 40,
-  },
-  greenText: {
-    color: '#7CFC00',
+  dealsText: {
     fontSize: 14,
-  },
-  normalText: {
-    fontSize: 12,
+    color: '#fff',
   },
 });

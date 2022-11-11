@@ -1,14 +1,18 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, View, Image} from 'react-native';
+
 import Business from './business';
 import Deals from './deals';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+// import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useState} from 'react/cjs/react.development';
+// import {useEffect} from 'react/cjs/react.production.min';
+// import axios from 'axios';
 
-const Tab = createNativeStackNavigator();
+// const Tab = createNativeStackNavigator();
 
 const Tabs = ({navigation}) => {
   const [tabSwitch, setTabSwitch] = useState(true);
+
   return (
     <View>
       <View style={styles.tabsMain}>

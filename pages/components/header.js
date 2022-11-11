@@ -1,25 +1,27 @@
 import {StyleSheet, Text, View, Image, Button} from 'react-native';
 import React from 'react';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 const HaavooHeader = ({navigation}) => {
   return (
     <View>
-      {/* <View style={styles.mainHeader}>
-        <Image
-          style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
-          source={require('../../styles/icons/white-arrow-icon.png')}
-        />
-
+      <View style={styles.mainHeader}>
+        <Pressable
+          onPress={() => navigation.navigate('Search Your City or Location')}>
+          <Image
+            style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
+            source={require('../../styles/icons/white-arrow-icon.png')}
+          />
+        </Pressable>
         <View style={styles.mainSearch}>
           <Text style={styles.textHome}> Search </Text>
         </View>
-      </View> */}
+      </View>
       <View style={styles.cityMain}>
         <Text
           style={styles.city}
           onPress={() => navigation.navigate('Search Your City or Location')}>
-          {' '}
-          Kozhikode
+          Ernakulam
           <Image
             style={styles.downArrow}
             source={require('../../styles/icons/downArrow.png')}
@@ -34,9 +36,8 @@ export default HaavooHeader;
 
 const styles = StyleSheet.create({
   mainHeader: {
-    marginTop: 10,
+    margin: 10,
     flexDirection: 'row',
-    marginLeft: 10,
     alignItems: 'center',
   },
   hamburgerIcon: {
@@ -47,15 +48,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     alignItems: 'center',
     color: '#fff',
+    fontWeight: '700',
   },
   city: {
     fontSize: 20,
     fontWeight: '700',
     color: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backArrow: {
     width: 20,
     height: 30,
+    marginLeft: 10,
   },
   mainSearch: {
     justifyContent: 'center',
@@ -65,11 +70,10 @@ const styles = StyleSheet.create({
   cityMain: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
   downArrow: {
     width: 20,
-    height: 30,
-    marginLeft: 15,
+    height: 20,
   },
 });

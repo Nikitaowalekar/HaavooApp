@@ -1,13 +1,28 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {useState} from 'react/cjs/react.development';
+import {useStoreActions} from 'easy-peasy';
 
-const SelectCity = ({navigation, onCityClick}) => {
-  const [city, setCity] = useState();
+const SelectCity = ({navigation}) => {
   var mainCities = [
     {
       city: 'Ernakulam',
       img: '../../styles/icons/ernakulam.png',
+    },
+    {
+      city: 'Kozhikode',
+      img: '../../styles/icons/kozhikode.png',
+    },
+    {
+      city: 'Malappuram',
+      img: '../../styles/icons/malappuram.png',
+    },
+    {
+      city: 'Thiruvananthpuram',
+      img: '../../styles/icons/thiruvananthpuram.png',
+    },
+    {
+      city: 'Thrisur',
+      img: '../../styles/icons/thrisur.png',
     },
   ];
   var citiesArray = [
@@ -22,63 +37,43 @@ const SelectCity = ({navigation, onCityClick}) => {
     'kollam',
     'kattayam',
   ];
-  // console.log(city, 'city');
-  onCityClick(city);
+  const city = useStoreActions(actions => actions.city);
+  const setCity = useStoreActions(actions => actions.setCity);
+
   return (
     <View>
       <Text style={styles.mainText}> Popular Cities </Text>
       <View style={styles.mainCard}>
-        <View style={styles.cityCard} onPress={() => setCity('Ernakulam')}>
-          <Image
-            style={styles.imageCard}
-            source={require('../../styles/icons/ernakulam.png')}
-          />
-          <Text style={styles.blackText}>{mainCities[0].city}</Text>
-        </View>
-        <View style={styles.cityCard} onPress={() => setCity('Kozhikode')}>
-          <Image
-            style={styles.imageCard}
-            source={require('../../styles/icons/kozhikode.png')}
-          />
-          <Text
-            style={styles.blackText}
-            onPress={() => navigation.navigate('Search')}>
-            Kozhikode
-          </Text>
-        </View>
-        <View style={styles.cityCard} onPress={() => setCity('Malappuram')}>
-          <Image
-            style={styles.imageCard}
-            source={require('../../styles/icons/malappuram.png')}
-          />
-          <Text style={styles.blackText}>Malappuram</Text>
-        </View>
+        {mainCities.map((mainCity, index) => {
+          return (
+            <TouchableOpacity
+              style={styles.cardmaindiv}
+              onPress={() => {
+                setCity(mainCity.city);
+                navigation.navigate('Search');
+              }}>
+              <View style={styles.cityCard}>
+                <Image
+                  style={styles.imageCard}
+                  source={require('../../styles/icons/ernakulam.png')}
+                />
+                <Text style={styles.blackText}>{mainCity.city}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
-      <View style={styles.secondMainCard}>
-        <View
-          style={styles.cityCard}
-          onPress={() => setCity('Thiruvananthpuram')}>
-          <Image
-            style={styles.imageCard}
-            source={require('../../styles/icons/ernakulam.png')}
-          />
-          <Text style={styles.blackText}>Thiruvananthpuram</Text>
-        </View>
-        <View style={styles.cityCard} onPress={() => setCity('Thrisur')}>
-          <Image
-            style={styles.imageCard}
-            source={require('../../styles/icons/kozhikode.png')}
-          />
-          <Text style={styles.blackText}>Thrisur</Text>
-        </View>
-      </View>
+
       <View style={styles.otherCities}>
         <Text style={styles.otherCitiesText}> Other Cities </Text>
         {citiesArray.map((item, key) => (
           <Text
             key={key}
             style={styles.TextStyle}
-            onPress={() => setCity(item)}>
+            onPress={() => {
+              setCity(item);
+              navigation.navigate('Search');
+            }}>
             {item}
           </Text>
         ))}
@@ -98,11 +93,7 @@ const styles = StyleSheet.create({
   mainCard: {
     flexDirection: 'row',
     padding: 10,
-  },
-  secondMainCard: {
-    padding: 10,
-    flexDirection: 'row',
-    width: '70%',
+    flexWrap: 'wrap',
   },
   cityCard: {
     flex: 1,
@@ -133,5 +124,8 @@ const styles = StyleSheet.create({
   },
   blackText: {
     color: '#fff',
+  },
+  cardmaindiv: {
+    width: '33%',
   },
 });

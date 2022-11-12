@@ -1,7 +1,7 @@
 import {Image, TextInput, View, StyleSheet} from 'react-native';
 import React from 'react';
 import {useState} from 'react/cjs/react.development';
-import isEmpty from './isempty';
+import isEmpty from './utils/isempty';
 
 const Search = () => {
   const [searchInputValue, setSearchInputValue] = useState();

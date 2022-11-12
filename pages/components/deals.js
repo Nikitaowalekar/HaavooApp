@@ -3,17 +3,20 @@ import React from 'react';
 import axios from 'react-native-axios';
 import {useEffect, useState} from 'react/cjs/react.development';
 import dealsData from './dealsData';
-import isEmpty from './isempty';
-import Loader from './loader';
+import isEmpty from './utils/isempty';
+import Loader from './common/loader';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 const Deals = () => {
   const [details, setDetails] = useState([]);
   const [loader, setLoader] = useState(false);
+  const city = useStoreState(state => state.city);
+  const setCity = useStoreActions(actions => actions.setCity);
   const fetchDeals = () => {
     setLoader(true);
     axios
       .get(
-        'https://staging.admin.haavoo.com/api/deals?city=&area=&query=&page=1&type=&category=&sort=&pageSize=',
+        `https://staging.admin.haavoo.com/api/deals?city=${city}&area=${city}&query=&page=1&type=&category=&sort=&pageSize=`,
       )
       .then(function (response) {
         setDetails(response?.data?.data);
@@ -28,7 +31,7 @@ const Deals = () => {
 
   useEffect(() => {
     fetchDeals();
-  }, []);
+  }, [city]);
 
   return (
     <View>

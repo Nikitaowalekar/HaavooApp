@@ -1,17 +1,20 @@
 import {StyleSheet, Text, View, Image, Button} from 'react-native';
 import React from 'react';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 const HaavooHeader = ({navigation}) => {
+  const city = useStoreState(state => state.city);
+  const setCity = useStoreActions(actions => actions.setCity);
   return (
     <View>
       <View style={styles.mainHeader}>
         <Pressable
           onPress={() => navigation.navigate('Search Your City or Location')}>
-          <Image
+          {/* <Image
             style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
             source={require('../../styles/icons/white-arrow-icon.png')}
-          />
+          /> */}
         </Pressable>
         <View style={styles.mainSearch}>
           <Text style={styles.textHome}> Search </Text>
@@ -21,7 +24,7 @@ const HaavooHeader = ({navigation}) => {
         <Text
           style={styles.city}
           onPress={() => navigation.navigate('Search Your City or Location')}>
-          Ernakulam
+          {city}
           <Image
             style={styles.downArrow}
             source={require('../../styles/icons/downArrow.png')}

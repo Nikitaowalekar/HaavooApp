@@ -8,7 +8,7 @@ const Loader = ({showLoader}) => {
         <View>
           <Image
             style={styles.image}
-            source={require('../../styles/icons/logogif.gif')}
+            source={require('../../../styles/icons/logogif.gif')}
           />
         </View>
       )}

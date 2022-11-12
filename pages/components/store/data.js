@@ -1,8 +1,13 @@
 import {action, createStore} from 'easy-peasy';
 
-export const store = createStore({
-  todos: ['Create store', 'Wrap application', 'Use store'],
-  addTodo: action((state, payload) => {
-    state.todos.push(payload);
+const Store = createStore({
+  city: '',
+  setCity: action((state, payload) => {
+    // alert(payload)
+    return {
+      ...state,
+      city: payload,
+    };
   }),
 });
+export default Store;

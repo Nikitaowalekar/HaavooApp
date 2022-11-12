@@ -3,17 +3,20 @@ import React from 'react';
 import BusinessData from './businessData';
 import axios from 'react-native-axios';
 import {useEffect, useState} from 'react/cjs/react.development';
-import isEmpty from './isempty';
-import Loader from './loader';
+import isEmpty from './utils/isempty';
+import Loader from './common/loader';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 const Business = () => {
   const [details, setDetails] = useState([]);
   const [loader, setLoader] = useState(false);
+  const city = useStoreState(state => state.city);
+  const setCity = useStoreActions(actions => actions.setCity);
   const fetchBusiness = () => {
     setLoader(true);
     axios
       .get(
-        'https://admin.haavoo.com/api/business?city=&area=&search_query=&page=1&type=&category=&sort=',
+        `https://admin.haavoo.com/api/business?city=${city}&area=${city}&search_query=&page=1&type=&category=&sort=`,
       )
       .then(function (response) {
         setDetails(response?.data?.data?.data);
@@ -28,7 +31,7 @@ const Business = () => {
 
   useEffect(() => {
     fetchBusiness();
-  }, []);
+  }, [city]);
 
   return (
     <View>

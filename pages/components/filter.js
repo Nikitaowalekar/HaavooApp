@@ -4,14 +4,21 @@ import {
   View,
   Pressable,
   Modal,
-  Alert,
   Image,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import {useState} from 'react/cjs/react.development';
+import {useStoreActions} from 'easy-peasy';
+import Areas from './areas';
 
 const Filter = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [business, setBusiness] = useState();
+
+  const businessTypes = ['Individual', 'Shop/Office'];
+  const setBusinessType = useStoreActions(actions => actions.setBusinessType);
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -19,17 +26,52 @@ const Filter = () => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+        <View
+          style={[styles.modalView, {backgroundColor: 'rgba(0, 0, 0, 0.4)'}]}>
+          <View style={styles.centeredView}>
+            <ScrollView style={styles.scrollView}>
+              <View style={styles.modalView}>
+                <Pressable
+                  style={[styles.button, styles.filterHeader]}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Image
+                    style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
+                    source={require('../../styles/icons/white-arrow-icon.png')}
+                  />
+                  <View>
+                    <Text style={styles.modalText}>Filters</Text>
+                  </View>
+                  <View></View>
+                </Pressable>
+                <View style={styles.firstCard}>
+                  <Text style={styles.bigFont}> Type Business</Text>
+                  <View style={styles.types}>
+                    {businessTypes.map((type, index) => {
+                      return (
+                        <View key={index}>
+                          <Text
+                            style={[
+                              styles.businessType,
+                              business === index ? styles.businessSelect : '',
+                            ]}
+                            onPress={() => {
+                              setBusiness(index);
+                              setBusinessType(type);
+                            }}>
+                            {type}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </View>
+                <View style={styles.firstCard}>
+                  <Areas />
+                </View>
+              </View>
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -49,18 +91,12 @@ const Filter = () => {
 export default Filter;
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    // marginTop: 22,
-    margin: 0,
-  },
   modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 35,
-    alignItems: 'center',
+    margin: 0,
+    backgroundColor: '#212529',
+    borderRadius: 0,
     shadowColor: '#000',
+    flex: 1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -69,8 +105,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  centeredView: {
+    flex: 1,
+  },
   button: {
-    // borderRadius: 10,
     padding: 15,
     elevation: 2,
     flexDirection: 'row',
@@ -80,9 +118,7 @@ const styles = StyleSheet.create({
   buttonOpen: {
     backgroundColor: 'lightgray',
   },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
+
   textStyle: {
     color: 'black',
     fontWeight: 'bold',
@@ -91,12 +127,49 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
-    color: 'black',
+    color: 'white',
+    fontSize: 18,
   },
   sortIcon: {
     width: 20,
     height: 20,
+  },
+  backArrow: {
+    width: 20,
+    height: 30,
+  },
+  filterHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  firstCard: {
+    borderWidth: 1,
+    borderColor: '#666666',
+    borderRadius: 10,
+    margin: 20,
+    marginTop: 10,
+    padding: 15,
+  },
+  bigFont: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  types: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  businessType: {
+    margin: 5,
+    borderWidth: 1,
+    borderColor: '#666666',
+    borderRadius: 20,
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  businessSelect: {
+    backgroundColor: '#FAA41A',
   },
 });

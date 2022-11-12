@@ -17,5 +17,28 @@ const Store = createStore({
       sort: payload,
     };
   }),
+  selectQuery: '',
+  setSelectQuery: action((state, payload) => {
+    return {
+      ...state,
+      selectQuery: payload,
+    };
+  }),
+  businessType: '',
+  setBusinessType: action((state, payload) => {
+    // alert(payload)
+    return {
+      ...state,
+      businessType: payload,
+    };
+  }),
+  area: '',
+  setArea: action((state, payload) => {
+    // alert(payload)
+    return {
+      ...state,
+      area: payload,
+    };
+  }),
 });
 export default Store;

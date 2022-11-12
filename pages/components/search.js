@@ -2,11 +2,14 @@ import {Image, TextInput, View, StyleSheet} from 'react-native';
 import React from 'react';
 import {useState} from 'react/cjs/react.development';
 import isEmpty from './utils/isempty';
+import {useStoreActions} from 'easy-peasy';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 const Search = () => {
   const [searchInputValue, setSearchInputValue] = useState();
   const [FilteredDataSource, setFilteredDataSource] = useState();
   const [search, setSearch] = useState();
+  const setSelectQuery = useStoreActions(actions => actions.setSort);
 
   const cities = [
     'Alappuzha',
@@ -23,22 +26,10 @@ const Search = () => {
 
   const onChangeHandler = text => {
     setSearchInputValue(text);
-    console.log(searchInputValue, 'value');
+    // console.log(searchInputValue, 'value');
 
     if (!isEmpty(searchInputValue)) {
-      const newData = cities.filter(function (item) {
-        const itemData = item.title
-          ? item.title.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        console.log(itemData.indexOf(textData) > -1);
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredDataSource(newData);
-      setSearch(text);
-    } else {
-      setFilteredDataSource(cities);
-      setSearch(text);
+      setSelectQuery(text);
     }
   };
 
@@ -52,12 +43,14 @@ const Search = () => {
         returnKeyType={'done'}
         selectionColor="black"
         placeholderTextColor="#F8F0E3"
-        onChangeText={text => onChangeHandler(text)}
+        onChangeText={text => setSearch(text)}
       />
-      <Image
-        style={styles.searchIcon}
-        source={require('../../styles/icons/search-icon.png')}
-      />
+      <Pressable onPress={() => onChangeHandler(search)}>
+        <Image
+          style={styles.searchIcon}
+          source={require('../../styles/icons/search-icon.png')}
+        />
+      </Pressable>
     </View>
   );
 };
@@ -65,9 +58,10 @@ const Search = () => {
 const styles = StyleSheet.create({
   searchIcon: {
     alignSelf: 'center',
+    margin: 15,
     marginRight: 20,
-    width: 15,
-    height: 15,
+    width: 20,
+    height: 20,
   },
   textInputView: {
     borderWidth: 1,

@@ -12,12 +12,14 @@ const Business = () => {
   const [loader, setLoader] = useState(false);
   const city = useStoreState(state => state.city);
   const sort = useStoreState(state => state.sort);
+  const selectQuery = useStoreState(state => state.selectQuery);
+  const area = useStoreState(state => state.area);
   const setCity = useStoreActions(actions => actions.setCity);
   const fetchBusiness = () => {
     setLoader(true);
     axios
       .get(
-        `https://admin.haavoo.com/api/business?city=${city}&area=${city}&search_query=&page=1&type=&category=&sort=${sort}`,
+        `https://admin.haavoo.com/api/business?city=${city}&area=${area}&search_query=${selectQuery}&page=1&type=&category=&sort=${sort}`,
       )
       .then(function (response) {
         setDetails(response?.data?.data?.data);
@@ -32,7 +34,7 @@ const Business = () => {
 
   useEffect(() => {
     fetchBusiness();
-  }, [city, sort]);
+  }, [city, sort, selectQuery, area]);
 
   return (
     <View>

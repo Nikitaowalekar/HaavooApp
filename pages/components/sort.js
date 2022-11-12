@@ -40,7 +40,7 @@ const Sort = () => {
               <Pressable
                 onPress={() => {
                   setPopularity(false);
-                  setSort('Relevance');
+                  setSort('relevance');
                   setModalVisible(false);
                 }}>
                 <View style={styles.checkboxContainer}>
@@ -57,7 +57,7 @@ const Sort = () => {
               <Pressable
                 onPress={() => {
                   setPopularity(true);
-                  setSort('Popularity');
+                  setSort('popularity');
                   setModalVisible(false);
                 }}>
                 <View style={styles.checkboxContainer}>

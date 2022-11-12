@@ -9,36 +9,66 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useState} from 'react/cjs/react.development';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 const Sort = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [popularity, setPopularity] = useState(false);
+  const sort = useStoreState(state => state.sort);
+  const setSort = useStoreActions(actions => actions.setSort);
   return (
     <View style={styles.centeredView}>
       <Modal
-        animationType="slide"
         transparent={true}
+        animationType="slide"
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Pressable
-              style={styles.closebtn}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Image
-                style={styles.closeIcon}
-                source={require('../../styles/icons/closeicon.png')}
+          <View
+            style={[styles.modalView, {backgroundColor: 'rgba(0, 0, 0, 0.6)'}]}>
+            <View style={styles.background}>
+              <Pressable
+                style={styles.closebtn}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Image
+                  style={styles.closeIcon}
+                  source={require('../../styles/icons/closeicon.png')}
+                />
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  setPopularity(false);
+                  setSort('Relevance');
+                  setModalVisible(false);
+                }}>
+                <View style={styles.checkboxContainer}>
+                  <Text style={styles.modalText}> Relevance </Text>
+                  <View style={styles.checkbox}>
+                    <View
+                      style={!popularity ? styles.checkboxInside : ''}></View>
+                  </View>
+                </View>
+              </Pressable>
+              <View
+                style={{width: '100%', height: 1, backgroundColor: 'white'}}
               />
-            </Pressable>
-            <Text style={styles.modalText}> Relevance </Text>
-            <Text style={styles.modalText}> Popularity </Text>
-            {/* <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable> */}
+              <Pressable
+                onPress={() => {
+                  setPopularity(true);
+                  setSort('Popularity');
+                  setModalVisible(false);
+                }}>
+                <View style={styles.checkboxContainer}>
+                  <Text style={styles.modalText}> Popularity </Text>
+                  <View style={styles.checkbox}>
+                    <View
+                      style={popularity ? styles.checkboxInside : ''}></View>
+                  </View>
+                </View>
+              </Pressable>
+            </View>
           </View>
         </View>
       </Modal>
@@ -60,18 +90,17 @@ export default Sort;
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    // marginTop: 22,
     margin: 0,
   },
   modalView: {
     margin: 0,
-    backgroundColor: '#000',
-    borderRadius: 10,
-    padding: 35,
-    paddingTop: 20,
+    backgroundColor: '#212529',
+    borderRadius: 0,
+    // padding: 20,
+    // paddingTop: 20,
     // alignItems: 'center',
     shadowColor: '#000',
-    top: '73%',
+    flex: 1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -104,6 +133,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
+    marginTop: 10,
     // textAlign: 'center',
     color: 'white',
   },
@@ -117,6 +147,29 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   closebtn: {
-    left: '100%',
+    left: '50%',
+  },
+  background: {
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    padding: 20,
+    top: '80%',
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  checkbox: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    width: 20,
+    height: 20,
+    marginBottom: 15,
+    marginTop: 10,
+  },
+  checkboxInside: {
+    backgroundColor: 'yellow',
+    width: 14,
+    height: 14,
+    margin: 3,
   },
 });

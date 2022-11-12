@@ -51,7 +51,8 @@ const SelectCity = ({navigation}) => {
               onPress={() => {
                 setCity(mainCity.city);
                 navigation.navigate('Search');
-              }}>
+              }}
+              key={index}>
               <View style={styles.cityCard}>
                 <Image
                   style={styles.imageCard}

@@ -8,7 +8,6 @@ const BusinessData = props => {
   // console.log(props?.item.thumb_image);
   var img = `https://staging.admin.haavoo.com/app-images/${props?.item?.thumb_image}`;
 
-  console.log('business details', props);
   return (
     <View style={styles.cardParent} key={props?.item?.id}>
       <View style={styles.flexMain}>
@@ -23,10 +22,10 @@ const BusinessData = props => {
         <View style={styles.mainText}>
           <Text style={styles.whiteText}>{props?.item?.business_name}</Text>
           <Text style={styles.normalText}>
-            Area : {props?.item?.areas[0]?.name}
+            Category : {props?.item?.categories[0]?.name}
           </Text>
           <Text style={styles.normalText}>
-            Category : {props?.item?.categories[0]?.name}
+            Area : {props?.item?.areas[0]?.name}
           </Text>
           <Text style={styles.normalText}>{desc}</Text>
         </View>

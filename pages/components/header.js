@@ -24,7 +24,7 @@ const HaavooHeader = ({navigation}) => {
         <Text
           style={styles.city}
           onPress={() => navigation.navigate('Search Your City or Location')}>
-          {city}
+          {city ? city : 'Kozhikode'}
           <Image
             style={styles.downArrow}
             source={require('../../styles/icons/downArrow.png')}

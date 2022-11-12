@@ -9,5 +9,13 @@ const Store = createStore({
       city: payload,
     };
   }),
+  sort: '',
+  setSort: action((state, payload) => {
+    // alert(payload)
+    return {
+      ...state,
+      sort: payload,
+    };
+  }),
 });
 export default Store;

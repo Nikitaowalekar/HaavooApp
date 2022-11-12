@@ -27,6 +27,7 @@ const Tabs = ({navigation}) => {
           Deals
         </Text>
       </View>
+
       {tabSwitch && <Business />}
       {tabSwitch === false && <Deals />}
       {/* no details found card */}

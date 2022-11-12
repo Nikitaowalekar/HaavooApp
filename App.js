@@ -15,6 +15,8 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import HaavooHome from './pages/landing_page';
 import MainPage from './pages/main_page';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createStore, StoreProvider} from 'easy-peasy';
+// import {store} from './pages/components/store/data';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,8 @@ const MyTheme = {
     primary: 'rgb(255, 45, 85)',
   },
 };
+
+// const data = createStore(store);
 
 const App = () => {
   return (

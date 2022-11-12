@@ -4,20 +4,25 @@ import BusinessData from './businessData';
 import axios from 'react-native-axios';
 import {useEffect, useState} from 'react/cjs/react.development';
 import isEmpty from './isempty';
+import Loader from './loader';
 
 const Business = () => {
   const [details, setDetails] = useState([]);
+  const [loader, setLoader] = useState(false);
   const fetchBusiness = () => {
+    setLoader(true);
     axios
       .get(
         'https://admin.haavoo.com/api/business?city=&area=&search_query=&page=1&type=&category=&sort=',
       )
       .then(function (response) {
         setDetails(response?.data?.data?.data);
+        setLoader(false);
       })
       .catch(function (error) {
         // handle error
         alert(error.message);
+        setLoader(false);
       });
   };
 
@@ -27,20 +32,23 @@ const Business = () => {
 
   return (
     <View>
-      <View>
-        {!isEmpty(details) ? (
-          <FlatList
-            style={{height: '85%'}}
-            data={details}
-            renderItem={BusinessData}
-            keyExtractor={item => item.id}
-          />
-        ) : (
-          <View style={styles.noDeals}>
-            <Text style={styles.dealsText}> Sorry, no business found. </Text>
-          </View>
-        )}
-      </View>
+      <Loader showLoader={loader} />
+      {loader === false && (
+        <View>
+          {!isEmpty(details) ? (
+            <FlatList
+              style={{height: '85%'}}
+              data={details}
+              renderItem={BusinessData}
+              keyExtractor={item => item.id}
+            />
+          ) : (
+            <View style={styles.noDeals}>
+              <Text style={styles.dealsText}> Sorry, no business found. </Text>
+            </View>
+          )}
+        </View>
+      )}
     </View>
   );
 };

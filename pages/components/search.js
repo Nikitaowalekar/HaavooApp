@@ -1,7 +1,47 @@
 import {Image, TextInput, View, StyleSheet} from 'react-native';
 import React from 'react';
+import {useState} from 'react/cjs/react.development';
+import isEmpty from './isempty';
 
 const Search = () => {
+  const [searchInputValue, setSearchInputValue] = useState();
+  const [FilteredDataSource, setFilteredDataSource] = useState();
+  const [search, setSearch] = useState();
+
+  const cities = [
+    'Alappuzha',
+    'Idukki',
+    'Kannur',
+    'Kasargod',
+    'kollam',
+    'kattayam',
+    'Kannur',
+    'Kasargod',
+    'kollam',
+    'kattayam',
+  ];
+
+  const onChangeHandler = text => {
+    setSearchInputValue(text);
+    console.log(searchInputValue, 'value');
+
+    if (!isEmpty(searchInputValue)) {
+      const newData = cities.filter(function (item) {
+        const itemData = item.title
+          ? item.title.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        console.log(itemData.indexOf(textData) > -1);
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      setFilteredDataSource(cities);
+      setSearch(text);
+    }
+  };
+
   return (
     <View style={styles.textInputView}>
       <TextInput
@@ -12,8 +52,7 @@ const Search = () => {
         returnKeyType={'done'}
         selectionColor="black"
         placeholderTextColor="#F8F0E3"
-        // value={searchValue}
-        // onChangeText={text => searchFunction(text)}
+        onChangeText={text => onChangeHandler(text)}
       />
       <Image
         style={styles.searchIcon}

@@ -40,5 +40,12 @@ const Store = createStore({
       area: payload,
     };
   }),
+  category: '',
+  setCategory: action((state, payload) => {
+    return {
+      ...state,
+      category: payload,
+    };
+  }),
 });
 export default Store;

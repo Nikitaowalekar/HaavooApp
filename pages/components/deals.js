@@ -6,17 +6,19 @@ import dealsData from './dealsData';
 import isEmpty from './utils/isempty';
 import Loader from './common/loader';
 import {useStoreActions, useStoreState} from 'easy-peasy';
+import NoDataFound from './common/nodatafound';
 
 const Deals = () => {
   const [details, setDetails] = useState([]);
   const [loader, setLoader] = useState(false);
   const city = useStoreState(state => state.city);
   const setCity = useStoreActions(actions => actions.setCity);
+  const area = useStoreState(state => state.area);
   const fetchDeals = () => {
     setLoader(true);
     axios
       .get(
-        `https://staging.admin.haavoo.com/api/deals?city=${city}&area=${city}&query=&page=1&type=&category=&sort=&pageSize=`,
+        `https://staging.admin.haavoo.com/api/deals?city=${city}&area=${area}&query=&page=1&type=&category=&sort=&pageSize=`,
       )
       .then(function (response) {
         setDetails(response?.data?.data);
@@ -31,7 +33,7 @@ const Deals = () => {
 
   useEffect(() => {
     fetchDeals();
-  }, [city]);
+  }, [city, area]);
 
   return (
     <View>
@@ -47,9 +49,7 @@ const Deals = () => {
               keyExtractor={item => item.id}
             />
           ) : (
-            <View style={styles.noDeals}>
-              <Text style={styles.dealsText}> Sorry, no deals found. </Text>
-            </View>
+            <NoDataFound text={'Sorry, no deals found.'} />
           )}
         </View>
       )}
@@ -59,14 +59,4 @@ const Deals = () => {
 
 export default Deals;
 
-const styles = StyleSheet.create({
-  noDeals: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  dealsText: {
-    fontSize: 14,
-    color: '#fff',
-  },
-});
+const styles = StyleSheet.create({});

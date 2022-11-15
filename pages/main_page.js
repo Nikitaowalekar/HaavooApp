@@ -4,27 +4,36 @@ import Search from './components/search';
 import HaavooHeader from './components/header';
 import Tabs from './components/tabs';
 import SortAndFilter from './components/sortandfilter';
+import LinearGradient from 'react-native-linear-gradient';
 
 const MainPage = ({navigation}) => {
   return (
-    <View style={styles.mainbgColor}>
-      <View style={{flex: 1}}>
-        <HaavooHeader navigation={navigation} />
-        <Search />
-        <Tabs />
+    <LinearGradient
+      colors={['#4F0D04', '#4F0D04', '#000']}
+      style={styles.linearGradient}>
+      <View style={styles.mainbgColor}>
+        <View style={{flex: 1}}>
+          <HaavooHeader navigation={navigation} />
+          <Search />
+          <Tabs />
+        </View>
+        <View style={{height: 50}}>
+          <SortAndFilter />
+        </View>
       </View>
-      <View style={{height: 50}}>
-        <SortAndFilter />
-      </View>
-    </View>
+    </LinearGradient>
   );
 };
 
 export default MainPage;
 
 const styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    borderRadius: 0,
+  },
   mainbgColor: {
-    backgroundColor: '#4F0D04',
+    // backgroundColor: '#4F0D04',
     height: '100%',
     flex: 1,
   },

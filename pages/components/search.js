@@ -41,7 +41,7 @@ const Search = () => {
         activeUnderlineColor={'transparent'}
         underlineColor="transparent"
         returnKeyType={'done'}
-        selectionColor="black"
+        selectionColor="white"
         placeholderTextColor="#F8F0E3"
         onChangeText={text => setSearch(text)}
       />

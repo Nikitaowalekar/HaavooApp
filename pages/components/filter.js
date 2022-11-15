@@ -11,6 +11,8 @@ import React from 'react';
 import {useState} from 'react/cjs/react.development';
 import {useStoreActions} from 'easy-peasy';
 import Areas from './areas';
+import Categories from './category';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Filter = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,52 +30,61 @@ const Filter = () => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={[styles.modalView, {backgroundColor: 'rgba(0, 0, 0, 0.4)'}]}>
-          <View style={styles.centeredView}>
-            <ScrollView style={styles.scrollView}>
-              <View style={styles.modalView}>
-                <Pressable
-                  style={[styles.button, styles.filterHeader]}
-                  onPress={() => setModalVisible(!modalVisible)}>
-                  <Image
-                    style={[styles.backArrow, {transform: [{rotate: '90deg'}]}]}
-                    source={require('../../styles/icons/white-arrow-icon.png')}
-                  />
-                  <View>
-                    <Text style={styles.modalText}>Filters</Text>
+        <LinearGradient
+          colors={['#4F0D04', '#4F0D04', '#000']}
+          style={styles.linearGradient}>
+          <View style={[styles.modalView]}>
+            <View style={styles.centeredView}>
+              <ScrollView style={styles.scrollView}>
+                <View style={styles.modalView}>
+                  <Pressable
+                    style={[styles.button, styles.filterHeader]}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Image
+                      style={[
+                        styles.backArrow,
+                        {transform: [{rotate: '90deg'}]},
+                      ]}
+                      source={require('../../styles/icons/white-arrow-icon.png')}
+                    />
+                    <View>
+                      <Text style={styles.modalText}>Filters</Text>
+                    </View>
+                    <View></View>
+                  </Pressable>
+                  <View style={styles.firstCard}>
+                    <Text style={styles.bigFont}> Type Business</Text>
+                    <View style={styles.types}>
+                      {businessTypes.map((type, index) => {
+                        return (
+                          <View key={index}>
+                            <Text
+                              style={[
+                                styles.businessType,
+                                business === index ? styles.businessSelect : '',
+                              ]}
+                              onPress={() => {
+                                setBusiness(index);
+                                setBusinessType(type);
+                              }}>
+                              {type}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                    </View>
                   </View>
-                  <View></View>
-                </Pressable>
-                <View style={styles.firstCard}>
-                  <Text style={styles.bigFont}> Type Business</Text>
-                  <View style={styles.types}>
-                    {businessTypes.map((type, index) => {
-                      return (
-                        <View key={index}>
-                          <Text
-                            style={[
-                              styles.businessType,
-                              business === index ? styles.businessSelect : '',
-                            ]}
-                            onPress={() => {
-                              setBusiness(index);
-                              setBusinessType(type);
-                            }}>
-                            {type}
-                          </Text>
-                        </View>
-                      );
-                    })}
+                  <View style={[styles.secondCard, styles.fixedHeight]}>
+                    <Categories />
+                  </View>
+                  <View style={[styles.firstCard, styles.fixedHeight]}>
+                    <Areas />
                   </View>
                 </View>
-                <View style={styles.firstCard}>
-                  <Areas />
-                </View>
-              </View>
-            </ScrollView>
+              </ScrollView>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
       </Modal>
       <Pressable
         style={[styles.button, styles.buttonOpen]}
@@ -93,7 +104,7 @@ export default Filter;
 const styles = StyleSheet.create({
   modalView: {
     margin: 0,
-    backgroundColor: '#212529',
+    backgroundColor: '#4F0D04',
     borderRadius: 0,
     shadowColor: '#000',
     flex: 1,
@@ -104,6 +115,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  linearGradient: {
+    flex: 1,
+    borderRadius: 0,
   },
   centeredView: {
     flex: 1,
@@ -152,6 +167,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 15,
   },
+  secondCard: {
+    borderWidth: 1,
+    borderColor: '#666666',
+    borderRadius: 10,
+    margin: 20,
+    marginTop: 10,
+  },
   bigFont: {
     fontSize: 18,
     fontWeight: '600',
@@ -172,4 +194,5 @@ const styles = StyleSheet.create({
   businessSelect: {
     backgroundColor: '#FAA41A',
   },
+  fixedHeight: {},
 });

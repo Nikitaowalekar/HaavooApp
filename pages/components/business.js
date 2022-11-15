@@ -6,6 +6,7 @@ import {useEffect, useState} from 'react/cjs/react.development';
 import isEmpty from './utils/isempty';
 import Loader from './common/loader';
 import {useStoreActions, useStoreState} from 'easy-peasy';
+import NoDataFound from './common/nodatafound';
 
 const Business = () => {
   const [details, setDetails] = useState([]);
@@ -49,9 +50,7 @@ const Business = () => {
               keyExtractor={item => item.id}
             />
           ) : (
-            <View style={styles.noDeals}>
-              <Text style={styles.dealsText}> Sorry, no business found. </Text>
-            </View>
+            <NoDataFound text={'Sorry, no business found.'} />
           )}
         </View>
       )}
@@ -60,15 +59,3 @@ const Business = () => {
 };
 
 export default Business;
-
-const styles = StyleSheet.create({
-  noDeals: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  dealsText: {
-    fontSize: 14,
-    color: '#fff',
-  },
-});

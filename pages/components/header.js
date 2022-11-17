@@ -25,6 +25,7 @@ const HaavooHeader = ({navigation}) => {
           style={styles.city}
           onPress={() => navigation.navigate('Search Your City or Location')}>
           {city ? city : 'Kozhikode'}
+          &nbsp;
           <Image
             style={styles.downArrow}
             source={require('../../styles/icons/downArrow.png')}
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   cityMain: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    // marginTop: 10,
   },
   downArrow: {
     width: 20,

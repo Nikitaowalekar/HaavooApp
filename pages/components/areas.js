@@ -1,100 +1,76 @@
-import {StyleSheet, Text, View, Pressable} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, Pressable, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
 import {useState} from 'react/cjs/react.development';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 
-const Areas = () => {
+const Areas = ({areasData}) => {
   const [selectArea, setSelectArea] = useState([]);
   const area = useStoreState(state => state.area);
   const setArea = useStoreActions(actions => actions.setArea);
-  const areas = [
-    'Abhayagiri',
-    'Adivaram Pudupadi',
-    'Adukkath',
-    'Akkal',
-    'Alli',
-    'Anakampoyil',
-    'Annasseri',
-    'Arakinar',
-    'Arikulam',
-    'Arur',
-    'Athiyodi',
-    'Atholi',
-    'Avadukka',
-    'Avala',
-    'Avilora',
-    'Avitanallur',
-    'Ayancheri',
-    'Ayanikkad',
-    'Azhiyur',
-    'Balusseri',
-    'Balussery',
-    'Beypore',
-    'Calicut',
-    'Calicut Arts & science college',
-    'Calicut Beach',
-    'Calicut Civil station',
-    'Calicut Medical college',
-    'Chakkittapara',
-    'Chalapuram',
-    'Chaliyam',
-    'Chamal',
-    'Chaniyankadavu',
-    'Chathamangalam',
-    'Cheekkonnummal',
-    'Chekkiyad',
-    'Chelakkad',
-    'Chelannur',
-    'Chelavur',
-    'Cheliya',
-    'Chemancheri',
-    'Chembra',
-    'Chembu Kadav',
-    'Chemmarathur',
-    'Chenoli',
-    'Cherapuram',
-    'Cherooppa',
-    'Cheruvadi',
-    'Cheruvannur',
-    'Chevarambalam',
-    'Chevayur',
-    'Chingapuram',
-    'Chombala',
-    'Chorode',
-    'Chungam',
-    'East Hill',
-    'Edacheri',
-    'Edacheri North',
-    'Ekarool',
-    'Elathur',
-    'Engapuzha',
-    'Eramala',
-  ];
+  // console.log(area, 'area');
+
+  useEffect(() => {
+    alert(JSON.stringify(selectArea));
+  }, [selectArea]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.mainText}>Areas</Text>
-      <View>
-        {areas.map((area, index) => {
+
+      <ScrollView style={styles.scrollView}>
+        {areasData?.map((areas, index) => {
           return (
             <Pressable
               onPress={() => {
-                setSelectArea(area);
-                setArea(area);
-              }}>
+                // setSelectArea(oldArea => [...oldArea, areas]);
+                // setArea(oldArea => [...oldArea], areas);
+                // const newSelectCategory = [...selectArea];
+                alert(JSON.stringify(selectArea));
+                if (selectArea?.includes(areas?.name)) {
+                  let itemIndex = selectArea?.findIndex(
+                    tm => tm === areas?.name,
+                  );
+                  selectArea?.splice(itemIndex, 1);
+                } else {
+                  // if (areas?.child?.length > 0) {
+                  //   areas?.child?.map(tempItem => {
+                  //     selectArea?.push(tempItem?.name);
+                  //   });
+                  //   selectArea?.push(areas?.name);
+                  //   alert(JSON.stringify(selectArea));
+                  // } else {
+                  selectArea?.push(areas?.name);
+                }
+
+                // if (
+                //   areas?.child?.length > 0 &&
+                //   areas?.child?.includes(areas?.name)
+                // ) {
+                //   areas?.child?.map(tempItem => {
+                //     let itemIndex = selectArea?.findIndex(
+                //       tm => tm === tempItem?.name,
+                //     );
+                //     selectArea?.splice(itemIndex, 1);
+                //   });
+                // }
+                // setSelectArea(selectArea);
+              }}
+              key={index}>
               <View style={styles.checkboxContainer}>
                 <View style={styles.checkbox}>
                   <View
                     style={
-                      selectArea === area ? styles.checkboxInside : ''
+                      selectArea?.includes(areas.name)
+                        ? styles.checkboxInside
+                        : ''
                     }></View>
                 </View>
-                <Text style={styles.areaText}> {area}</Text>
+                <Text style={styles.areaText}> {areas.name}</Text>
               </View>
             </Pressable>
           );
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -102,10 +78,15 @@ const Areas = () => {
 export default Areas;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   mainText: {
     fontSize: 20,
     fontWeight: '600',
+  },
+  scrollView: {
+    flex: 1,
   },
   checkboxContainer: {
     flexDirection: 'row',

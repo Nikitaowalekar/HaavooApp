@@ -13,7 +13,7 @@ import {useStoreActions, useStoreState} from 'easy-peasy';
 
 const Sort = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [popularity, setPopularity] = useState(false);
+  const [popularity, setPopularity] = useState('relevance');
   const sort = useStoreState(state => state.sort);
   const setSort = useStoreActions(actions => actions.setSort);
   return (
@@ -39,7 +39,7 @@ const Sort = () => {
               </Pressable>
               <Pressable
                 onPress={() => {
-                  setPopularity(false);
+                  setPopularity('relevance');
                   setSort('relevance');
                   setModalVisible(false);
                 }}>
@@ -47,7 +47,9 @@ const Sort = () => {
                   <Text style={styles.modalText}> Relevance </Text>
                   <View style={styles.checkbox}>
                     <View
-                      style={!popularity ? styles.checkboxInside : ''}></View>
+                      style={
+                        popularity === 'relevance' ? styles.checkboxInside : ''
+                      }></View>
                   </View>
                 </View>
               </Pressable>
@@ -56,7 +58,7 @@ const Sort = () => {
               />
               <Pressable
                 onPress={() => {
-                  setPopularity(true);
+                  setPopularity('popularity');
                   setSort('popularity');
                   setModalVisible(false);
                 }}>
@@ -64,7 +66,9 @@ const Sort = () => {
                   <Text style={styles.modalText}> Popularity </Text>
                   <View style={styles.checkbox}>
                     <View
-                      style={popularity ? styles.checkboxInside : ''}></View>
+                      style={
+                        popularity === 'popularity' ? styles.checkboxInside : ''
+                      }></View>
                   </View>
                 </View>
               </Pressable>
@@ -93,12 +97,7 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   modalView: {
-    margin: 0,
-    backgroundColor: '#212529',
     borderRadius: 0,
-    // padding: 20,
-    // paddingTop: 20,
-    // alignItems: 'center',
     shadowColor: '#000',
     flex: 1,
     shadowOffset: {
@@ -110,22 +109,27 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    // borderRadius: 10,
     padding: 15,
     elevation: 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#dad8d8',
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    margin: 5,
   },
   buttonOpen: {
-    backgroundColor: 'lightgray',
+    backgroundColor: 'transparent',
   },
   buttonClose: {
     backgroundColor: '#FFF',
     borderRadius: 10,
   },
   textStyle: {
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
     paddingLeft: 5,

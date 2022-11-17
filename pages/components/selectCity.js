@@ -1,8 +1,32 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import {useStoreActions} from 'easy-peasy';
+import {useState} from 'react/cjs/react.development';
+import axios from 'react-native-axios';
+
+const Cities = props => {
+  const setCity = useStoreActions(actions => actions.setCity);
+  return (
+    <Text
+      style={styles.TextStyle}
+      onPress={() => {
+        setCity(props?.item.name);
+        props?.navigation.navigate('Search');
+      }}>
+      {props?.item.name}
+    </Text>
+  );
+};
 
 const SelectCity = ({navigation}) => {
+  const [cities, setCities] = useState();
   var mainCities = [
     {
       city: 'Ernakulam',
@@ -25,20 +49,27 @@ const SelectCity = ({navigation}) => {
       img: '../../styles/icons/thrisur.png',
     },
   ];
-  var citiesArray = [
-    'Alappuzha',
-    'Idukki',
-    'Kannur',
-    'Kasargod',
-    'kollam',
-    'kattayam',
-    'Kannur',
-    'Kasargod',
-    'kollam',
-    'kattayam',
-  ];
+
   const city = useStoreActions(actions => actions.city);
   const setCity = useStoreActions(actions => actions.setCity);
+
+  const fetchCity = () => {
+    let url = `https://admin.haavoo.com/api/city`;
+    axios
+      .get(url)
+      .then(function (response) {
+        setCities(response?.data?.data);
+        // console.log(response?.data?.data);
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
+  };
+  // alert(JSON.stringify(data));
+
+  useEffect(() => {
+    fetchCity();
+  }, []);
 
   return (
     <View>
@@ -67,17 +98,24 @@ const SelectCity = ({navigation}) => {
 
       <View style={styles.otherCities}>
         <Text style={styles.otherCitiesText}> Other Cities </Text>
-        {citiesArray.map((item, key) => (
-          <Text
-            key={key}
-            style={styles.TextStyle}
-            onPress={() => {
-              setCity(item);
-              navigation.navigate('Search');
-            }}>
-            {item}
-          </Text>
-        ))}
+        <View>
+          {/* <FlatList
+            data={cities}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          /> */}
+
+          {cities?.map((item, index) => (
+            <TouchableOpacity
+              onPress={() => {
+                setCity(item.name);
+                navigation.navigate('Search');
+              }}
+              key={index}>
+              <Text style={styles.TextStyle}>{item?.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </View>
   );

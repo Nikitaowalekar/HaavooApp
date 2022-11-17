@@ -6,21 +6,54 @@ import {
   Modal,
   Image,
   ScrollView,
+  Button,
 } from 'react-native';
 import React from 'react';
-import {useState} from 'react/cjs/react.development';
-import {useStoreActions} from 'easy-peasy';
+import {useEffect, useState} from 'react/cjs/react.development';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 import Areas from './areas';
-import Categories from './category';
 import LinearGradient from 'react-native-linear-gradient';
+import Categories from './category';
+import axios from 'react-native-axios';
 
 const Filter = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [business, setBusiness] = useState();
+  const [categoryData, setCategoryData] = useState();
+  const [areasData, setAreasData] = useState();
+  const city = useStoreState(state => state.city);
 
   const businessTypes = ['Individual', 'Shop/Office'];
   const setBusinessType = useStoreActions(actions => actions.setBusinessType);
 
+  // const fetchCategory = () => {
+  //   let url = `https://admin.haavoo.com/api/category`;
+  //   axios
+  //     .get(url)
+  //     .then(function (response) {
+  //       setCategoryData(response?.data?.data);
+  //     })
+  //     .catch(function (error) {
+  //       alert(error.message);
+  //     });
+  // };
+
+  const fetchAreas = () => {
+    let url = `https://admin.haavoo.com/api/area?city=${city}`;
+    axios
+      .get(url)
+      .then(function (response) {
+        // alert(JSON.stringify(response?.data?.data));
+        setAreasData(response?.data?.data);
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
+  };
+
+  useEffect(() => {
+    fetchAreas();
+  }, [city]);
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -78,10 +111,18 @@ const Filter = () => {
                     <Categories />
                   </View>
                   <View style={[styles.firstCard, styles.fixedHeight]}>
-                    <Areas />
+                    <Areas areasData={areasData} />
                   </View>
                 </View>
               </ScrollView>
+            </View>
+            <View>
+              <Button
+                style={styles.yellowbtn}
+                // onPress={onPressLearnMore}
+                title="Apply"
+                color="#FAA41A"
+              />
             </View>
           </View>
         </LinearGradient>
@@ -104,7 +145,6 @@ export default Filter;
 const styles = StyleSheet.create({
   modalView: {
     margin: 0,
-    backgroundColor: '#4F0D04',
     borderRadius: 0,
     shadowColor: '#000',
     flex: 1,
@@ -131,11 +171,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonOpen: {
-    backgroundColor: 'lightgray',
+    backgroundColor: 'transparent',
   },
 
   textStyle: {
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
     paddingLeft: 5,
@@ -194,5 +234,13 @@ const styles = StyleSheet.create({
   businessSelect: {
     backgroundColor: '#FAA41A',
   },
-  fixedHeight: {},
+  fixedHeight: {
+    height: 500,
+  },
+  yellowbtn: {
+    fontSize: 20,
+    fontWeight: '600',
+    padding: 18,
+    borderRadius: 28,
+  },
 });

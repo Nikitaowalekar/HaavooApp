@@ -9,7 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const MainPage = ({navigation}) => {
   return (
     <LinearGradient
-      colors={['#4F0D04', '#4F0D04', '#000']}
+      colors={['#4F0D04', '#400000', '#000']}
       style={styles.linearGradient}>
       <View style={styles.mainbgColor}>
         <View style={{flex: 1}}>

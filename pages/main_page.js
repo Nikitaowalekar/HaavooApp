@@ -14,7 +14,7 @@ const MainPage = ({navigation}) => {
       <View style={styles.mainbgColor}>
         <View style={{flex: 1}}>
           <HaavooHeader navigation={navigation} />
-          <Search />
+          <Search cityProps={false} />
           <Tabs />
         </View>
         <View style={{height: 50}}>

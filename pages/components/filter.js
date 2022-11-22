@@ -15,47 +15,76 @@ import Areas from './areas';
 import LinearGradient from 'react-native-linear-gradient';
 import Categories from './category';
 import axios from 'react-native-axios';
+import isEmpty from './utils/isempty';
+import Loader from './common/loader';
 
 const Filter = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [business, setBusiness] = useState();
   const [categoryData, setCategoryData] = useState();
   const [areasData, setAreasData] = useState();
+  const [categories, setCategories] = useState();
   const city = useStoreState(state => state.city);
 
   const businessTypes = ['Individual', 'Shop/Office'];
   const setBusinessType = useStoreActions(actions => actions.setBusinessType);
+  const setCategory = useStoreActions(actions => actions.setFilterCategory);
+  const [loader, setLoader] = useState(false);
+  const category = useStoreState(state => state.filterCategory);
 
-  // const fetchCategory = () => {
-  //   let url = `https://admin.haavoo.com/api/category`;
-  //   axios
-  //     .get(url)
-  //     .then(function (response) {
-  //       setCategoryData(response?.data?.data);
-  //     })
-  //     .catch(function (error) {
-  //       alert(error.message);
-  //     });
-  // };
+  const fetchCategories = () => {
+    setLoader(true);
+    let url = `https://admin.haavoo.com/api/category`;
+    axios
+      .get(url)
+      .then(function (response) {
+        // alert(JSON.stringify(response?.data?.data));
+        setCategoryData(response?.data?.data);
+        setLoader(false);
+      })
+      .catch(function (error) {
+        alert(error.message);
+        setLoader(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const fetchAreas = () => {
+    setLoader(true);
     let url = `https://admin.haavoo.com/api/area?city=${city}`;
     axios
       .get(url)
       .then(function (response) {
         // alert(JSON.stringify(response?.data?.data));
         setAreasData(response?.data?.data);
+        setLoader(false);
       })
       .catch(function (error) {
         alert(error.message);
+        setLoader(false);
       });
   };
 
   useEffect(() => {
     fetchAreas();
   }, [city]);
+
+  const filterClicked = () => {
+    setModalVisible(false);
+    setBusinessType(business);
+    setCategory(categories);
+  };
+
+  const categoriesData = data => {
+    setCategories(data);
+  };
+
   return (
     <View style={styles.centeredView}>
+      <Loader showLoader={loader} />
       <Modal
         animationType="slide"
         transparent={true}
@@ -94,11 +123,14 @@ const Filter = () => {
                             <Text
                               style={[
                                 styles.businessType,
-                                business === index ? styles.businessSelect : '',
+                                business === type ? styles.businessSelect : '',
                               ]}
                               onPress={() => {
-                                setBusiness(index);
-                                setBusinessType(type);
+                                if (business !== type) {
+                                  setBusiness(type);
+                                } else {
+                                  setBusiness('');
+                                }
                               }}>
                               {type}
                             </Text>
@@ -108,7 +140,13 @@ const Filter = () => {
                     </View>
                   </View>
                   <View style={[styles.secondCard, styles.fixedHeight]}>
-                    <Categories />
+                    <Categories
+                      categoryData={categoryData}
+                      applyHandlerCategories={data => {
+                        categoriesData(data);
+                        console.log(data, 'data');
+                      }}
+                    />
                   </View>
                   <View style={[styles.firstCard, styles.fixedHeight]}>
                     <Areas areasData={areasData} />
@@ -119,9 +157,9 @@ const Filter = () => {
             <View>
               <Button
                 style={styles.yellowbtn}
-                // onPress={onPressLearnMore}
                 title="Apply"
                 color="#FAA41A"
+                onPress={() => filterClicked()}
               />
             </View>
           </View>
@@ -129,12 +167,20 @@ const Filter = () => {
       </Modal>
       <Pressable
         style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
+        onPress={() => {
+          setModalVisible(true);
+        }}>
         <Image
           style={styles.sortIcon}
           source={require('../../styles/icons/filter.png')}
         />
         <Text style={styles.textStyle}>Filters</Text>
+        {(!isEmpty(business) || !isEmpty(categories)) && (
+          <Image
+            style={styles.doneIcon}
+            source={require('../../styles/icons/doneicon.png')}
+          />
+        )}
       </Pressable>
     </View>
   );
@@ -242,5 +288,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     padding: 18,
     borderRadius: 28,
+    height: 40,
+  },
+  doneIcon: {
+    width: 20,
+    height: 20,
+    backgroundColor: '#FAA41A',
+    borderRadius: 10,
+    padding: 4,
   },
 });

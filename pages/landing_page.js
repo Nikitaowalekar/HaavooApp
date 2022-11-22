@@ -4,8 +4,14 @@ import SelectCity from './components/selectCity';
 import HaavooCityPage from './components/haavoocitypage';
 import Search from './components/search';
 import LinearGradient from 'react-native-linear-gradient';
+import {useState} from 'react/cjs/react.development';
 
 const HaavooHome = ({navigation}) => {
+  const [filteredCities, setFilteredCities] = useState();
+  const citiesData = data => {
+    setFilteredCities(data);
+  };
+
   return (
     <LinearGradient
       colors={['#4F0D04', '#4F0D04', '#000']}
@@ -13,8 +19,7 @@ const HaavooHome = ({navigation}) => {
       <View style={styles.container}>
         <ScrollView style={styles.scrollView}>
           <HaavooCityPage navigation={navigation} />
-          <Search />
-          <SelectCity navigation={navigation} />
+          <SelectCity navigation={navigation} filteredCities={filteredCities} />
         </ScrollView>
       </View>
     </LinearGradient>

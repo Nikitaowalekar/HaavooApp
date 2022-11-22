@@ -18,7 +18,7 @@ const Deals = () => {
     setLoader(true);
     axios
       .get(
-        `https://staging.admin.haavoo.com/api/deals?city=${city}&area=${area}&query=&page=1&type=&category=&sort=&pageSize=`,
+        `https://staging.admin.haavoo.com/api/deals?city=${city.toLowerCase()}&area=${area}&query=&page=1&type=&category=&sort=&pageSize=`,
       )
       .then(function (response) {
         setDetails(response?.data?.data);

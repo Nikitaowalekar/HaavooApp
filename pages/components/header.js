@@ -1,11 +1,28 @@
 import {StyleSheet, Text, View, Image, Button} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {useStoreActions, useStoreState} from 'easy-peasy';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HaavooHeader = ({navigation}) => {
   const city = useStoreState(state => state.city);
   const setCity = useStoreActions(actions => actions.setCity);
+  const getCity = () => {
+    try {
+      AsyncStorage.getItem('@storage_Key').then(value => {
+        if (value !== null) {
+          setCity(value);
+          navigation.navigate('Search');
+        }
+      });
+    } catch (e) {
+      alert('city fetched failed');
+    }
+  };
+
+  useEffect(() => {
+    getCity();
+  }, []);
   return (
     <View>
       <View style={styles.mainHeader}>
@@ -24,7 +41,7 @@ const HaavooHeader = ({navigation}) => {
         <Text
           style={styles.city}
           onPress={() => navigation.navigate('Search Your City or Location')}>
-          {city ? city : 'Kozhikode'}
+          {city ? city : navigation.navigate('Search Your City or Location')}
           &nbsp;
           <Image
             style={styles.downArrow}

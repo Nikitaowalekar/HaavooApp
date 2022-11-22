@@ -14,13 +14,15 @@ const Business = () => {
   const city = useStoreState(state => state.city);
   const sort = useStoreState(state => state.sort);
   const selectQuery = useStoreState(state => state.selectQuery);
+  const category = useStoreState(state => state.category);
+  const businessType = useStoreState(state => state.businessType);
   const area = useStoreState(state => state.area);
   const setCity = useStoreActions(actions => actions.setCity);
   const fetchBusiness = () => {
     setLoader(true);
     axios
       .get(
-        `https://admin.haavoo.com/api/business?city=${city}&area=${area}&search_query=${selectQuery}&page=1&type=&category=&sort=${sort}`,
+        `https://admin.haavoo.com/api/business?city=${city.toLowerCase()}&area=${area}&search_query=${selectQuery.toLowerCase()}&page=1&type=${businessType}&category=${category}&sort=${sort}`,
       )
       .then(function (response) {
         setDetails(response?.data?.data?.data);
@@ -35,7 +37,8 @@ const Business = () => {
 
   useEffect(() => {
     fetchBusiness();
-  }, [city, sort, selectQuery, area]);
+    console.log(category, 'category');
+  }, [city, sort, selectQuery, area, businessType, category]);
 
   return (
     <View>
@@ -48,6 +51,7 @@ const Business = () => {
               data={details}
               renderItem={BusinessData}
               keyExtractor={item => item.id}
+              onEndReachedThreshold={0.5}
             />
           ) : (
             <NoDataFound text={'Sorry, no business found.'} />

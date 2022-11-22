@@ -3,7 +3,6 @@ import {action, createStore} from 'easy-peasy';
 const Store = createStore({
   city: '',
   setCity: action((state, payload) => {
-    // alert(payload)
     return {
       ...state,
       city: payload,
@@ -11,7 +10,6 @@ const Store = createStore({
   }),
   sort: '',
   setSort: action((state, payload) => {
-    // alert(payload)
     return {
       ...state,
       sort: payload,
@@ -32,7 +30,7 @@ const Store = createStore({
       businessType: payload,
     };
   }),
-  area: [],
+  area: '',
   setArea: action((state, payload) => {
     // alert(payload)
     return {
@@ -40,11 +38,14 @@ const Store = createStore({
       area: payload,
     };
   }),
-  category: '',
-  setCategory: action((state, payload) => {
+  filterCategory: {
+    type: '',
+    category: '',
+  },
+  setFilterCategory: action((state, payload) => {
     return {
       ...state,
-      category: payload,
+      filterCategory: payload,
     };
   }),
 });

@@ -6,7 +6,7 @@ const BusinessData = props => {
   const temp = props?.item?.description.replace(regex, '');
   var desc = temp.replace(/&nbsp;/g, '');
   // console.log(props?.item.thumb_image);
-  var img = `https://staging.admin.haavoo.com/app-images/${props?.item?.thumb_image}`;
+  var img = `https://admin.haavoo.com/app-images/${props?.item?.thumb_image}`;
 
   return (
     <View style={styles.cardParent} key={props?.item?.id}>
@@ -14,9 +14,9 @@ const BusinessData = props => {
         <View>
           <Image
             style={styles.image}
-            source={{
-              uri: `${img}`,
-            }}
+            source={
+              img ? {uri: `${img}`} : require('../../styles/images/1.jpg')
+            }
           />
         </View>
         <View style={styles.mainText}>
@@ -27,7 +27,9 @@ const BusinessData = props => {
           <Text style={styles.normalText}>
             Area : {props?.item?.areas[0]?.name}
           </Text>
-          <Text style={styles.normalText}>{desc}</Text>
+          <Text style={styles.normalText} numberOfLines={3}>
+            {desc}
+          </Text>
         </View>
       </View>
     </View>

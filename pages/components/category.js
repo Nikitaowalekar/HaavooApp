@@ -8,185 +8,114 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import CategoryData from './categoryData';
 import {useState} from 'react/cjs/react.development';
-import {useStoreActions} from 'easy-peasy';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
-const Categories = () => {
-  const [selectCategory, setSelectCategory] = useState([]);
+const Categories = ({categoryData, applyHandlerCategories}) => {
+  const category = useStoreState(state => state.filterCategory);
+  const [selectCategory, setSelectCategory] = useState(category);
   const [subpartShow, setSubpartShow] = useState(null);
-  const [selectSubpart, setSelectSubpart] = useState([]);
-  const setCategory = useStoreActions(actions => actions.setCategory);
-  const categories = [
-    {
-      category: 'Consulting',
-      subpart: [
-        'Accountants',
-        'Architects',
-        'Astrologists',
-        'Civil',
-        'Contractors',
-      ],
-    },
-    {
-      category: 'Entertainment',
-      subpart: ['Event Organaizers'],
-    },
-    {
-      category: 'Hotel/Resorts',
-      subpart: ['Hotel', 'Lodge'],
-    },
-    {
-      category: 'Electricians',
-      subpart: ['Electrician'],
-    },
-    {
-      category: 'Plumbers',
-      subpart: ['Plumber'],
-    },
-    {
-      category: 'Tours & Travels',
-      subpart: ['Tours/Travels'],
-    },
-    {
-      category: 'Veterinary',
-      subpart: [
-        'Cattle',
-        'Pet Shops',
-        'Pig',
-        'Poultry Farm',
-        'Veterinary Clinics',
-      ],
-    },
-    {
-      category: 'Agriculture',
-      subpart: ['Nursery', 'Plants & Seeds'],
-    },
-    {
-      category: 'Fashion & Apparels',
-      subpart: ['Fancy', 'Jewellery', 'Perfumes', 'Watches & Clocks'],
-    },
-    {
-      category: 'PhotoGraphy',
-      subpart: ['Photographers'],
-    },
-    {
-      category: 'Supermarket',
-      subpart: ['Supermarkets'],
-    },
-    {
-      category: 'Shops',
-      subpart: [
-        'DTP/Printing',
-        'Electrical',
-        'Financial Services',
-        'Furniture',
-        'Graphics & Flex Printing',
-        'Grocery',
-        'Hardware',
-        'Home Appliances',
-        'Logistics & Courier Services',
-        'Opticals',
-        'Ornamental Fish & Aquarium Accessories',
-        'Pest Control',
-        'Vegetable',
-        'Water Suppliers',
-      ],
-    },
-    {
-      category: 'Medical',
-      subpart: [
-        'Doctors',
-        'Eye Care',
-        'Hospitals & Clinics',
-        'Laboratories / Medical Accessories',
-      ],
-    },
-    {
-      category: 'Fish & Meat',
-      subpart: ['Chicken', 'Fish', 'Other meat items'],
-    },
-    {
-      category: 'Domestic Services',
-      subpart: [
-        'Carpenter',
-        'Child Care',
-        'Delivery Jobs',
-        'Dry Cleaning',
-        'Ironing',
-        'Laundry',
-        'Maid',
-        'Others',
-        'Painter',
-      ],
-    },
-  ];
+
+  const city = useStoreState(state => state.city);
+  const setCategory = useStoreActions(actions => actions.setFilterCategory);
+
+  useEffect(() => {
+    applyHandlerCategories(selectCategory);
+    console.log(selectCategory, 'categories');
+    // setCategory(selectCategory);
+  }, [selectCategory]);
+
+  // console.warn('detailed data', categoryData);
+
   return (
     <View style={styles.container}>
       <Text style={styles.mainText}>Category</Text>
-      {/* <View style={styles.main}> */}
-      {/* <FlatList
-          style={{flex: 1}}
-          data={categories}
-          renderItem={CategoryData}
-          keyExtractor={item => item.id}
-        /> */}
       <ScrollView style={styles.scrollView}>
-        {categories?.map((item, index) => {
-          return (
-            <Pressable
-              onPress={() => {
-                setSelectCategory(item?.category);
-                setCategory(item?.category);
-              }}
-              key={index}>
-              <View style={styles.checkboxMainContainer}>
-                <View style={styles.checkboxContainer}>
-                  <View style={styles.checkbox}>
-                    <View
-                      style={
-                        selectCategory === item?.category
-                          ? styles.checkboxInside
-                          : ''
-                      }></View>
-                  </View>
-                  <Text style={styles.areaText}> {item?.category}</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (subpartShow === index) {
-                      setSubpartShow(null);
-                    } else {
-                      setSubpartShow(index);
-                    }
-                  }}>
-                  <Image
-                    style={styles.downArrow}
-                    source={require('../../styles/icons/downArrow.png')}
-                  />
-                </TouchableOpacity>
-              </View>
-              {subpartShow === index && (
-                <View style={styles.subpartMargin}>
-                  {item?.subpart?.map((item, index) => {
-                    return (
-                      <View
-                        key={index}
-                        style={styles.checkboxSubpartContainer}
-                        onPress={() => setSelectSubpart(index)}>
-                        <View style={styles.checkbox}>
-                          <View style={styles.checkboxInside}></View>
-                        </View>
-                        <Text style={styles.areaText}> {item}</Text>
-                      </View>
+        {categoryData?.length > 0 &&
+          categoryData?.map((item, index) => {
+            console.log(item, 'data');
+            return (
+              <Pressable
+                onPress={() => {
+                  const newSelectCategory = [...selectCategory];
+                  if (newSelectCategory?.includes(item.slug)) {
+                    let itemIndex = selectCategory?.findIndex(
+                      tm => tm === item?.slug,
                     );
-                  })}
+                    newSelectCategory?.splice(itemIndex, 1);
+                  } else {
+                    newSelectCategory?.push(item?.slug);
+                  }
+                  setSelectCategory(newSelectCategory);
+                }}
+                key={index}>
+                <View style={styles.checkboxMainContainer}>
+                  <View style={styles.checkboxContainer}>
+                    <View style={styles.checkbox}>
+                      <View
+                        style={
+                          selectCategory?.includes(item?.slug)
+                            ? styles.checkboxInside
+                            : ''
+                        }></View>
+                    </View>
+                    <Text style={styles.areaText}> {item?.name}</Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (subpartShow === index) {
+                        setSubpartShow(null);
+                      } else {
+                        setSubpartShow(index);
+                      }
+                    }}>
+                    <Image
+                      style={styles.downArrow}
+                      source={require('../../styles/icons/downArrow.png')}
+                    />
+                  </TouchableOpacity>
                 </View>
-              )}
-            </Pressable>
-          );
-        })}
+                {subpartShow === index && (
+                  <View style={styles.subpartMargin}>
+                    {item?.child?.map((sub, index) => {
+                      return (
+                        <Pressable
+                          key={index}
+                          onPress={() => {
+                            // console.log('sub clicked', sub);
+                            const newSelectCategory = [...selectCategory];
+                            if (newSelectCategory?.includes(sub)) {
+                              let itemIndex = selectCategory?.findIndex(
+                                tm => tm === sub?.slug,
+                              );
+                              newSelectCategory?.splice(itemIndex, 1);
+                            } else {
+                              newSelectCategory?.push(sub?.slug);
+                            }
+                            setSelectCategory(newSelectCategory);
+                          }}>
+                          <View style={styles.checkboxSubpartContainer}>
+                            <View style={styles.checkbox}>
+                              <View
+                                style={
+                                  selectCategory?.includes(sub?.slug) ||
+                                  selectCategory == categoryData?.slug
+                                    ? styles.checkboxInside
+                                    : ''
+                                }></View>
+                            </View>
+                            <Text style={styles.areaText}> {sub?.name}</Text>
+                          </View>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                )}
+              </Pressable>
+            );
+          })}
       </ScrollView>
     </View>
   );
